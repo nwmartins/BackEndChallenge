@@ -1,8 +1,7 @@
 package com.wealthsystems.challenge.datasource.model;
 
-import com.sun.istack.NotNull;
-
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,17 +13,23 @@ import javax.persistence.Table;
 @Table(name = "consumer")//Nome da tabela na DB
 public class Consumer implements Serializable{
 
-    private static final long serialVersionUID = 1458702358688006532L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
     private String name;
     private String phone;
     private String email;
 
     public Consumer() {
+    }
+
+    public Consumer(Long id, String name, String phone, String email) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
     }
 
     public Long getId() {
@@ -52,4 +57,16 @@ public class Consumer implements Serializable{
         this.email = email;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Consumer consumer = (Consumer) o;
+        return Objects.equals(id, consumer.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

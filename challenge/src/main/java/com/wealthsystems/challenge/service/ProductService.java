@@ -1,29 +1,29 @@
 package com.wealthsystems.challenge.service;
 
-import java.util.List;
-
-import com.wealthsystems.challenge.datasource.model.Consumer;
-import com.wealthsystems.challenge.repository.ConsumerRepository;
+import com.wealthsystems.challenge.datasource.model.Product;
+import com.wealthsystems.challenge.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ConsumerService {
+public class ProductService {
 
     //Objeto de Serviço, acessa a camada de Acesso a Dados = Repository
 
     @Autowired //Instancia pelo Spring;
-    ConsumerRepository consumerRepository;
+    ProductRepository productRepository;
 
 //    public Consumer findById(Long id) {
 //        return consumerRepository.findById(id).get();
 //    }
-    public List<Consumer> findAll() {
-        return consumerRepository.findAll();
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
-    public Consumer findById(Long id) {
-        return consumerRepository.findById(id).get();
+    public Product findById(Long id) {
+        return productRepository.findById(id).get();
     }
 
 //    List<Consumer> findAll();
