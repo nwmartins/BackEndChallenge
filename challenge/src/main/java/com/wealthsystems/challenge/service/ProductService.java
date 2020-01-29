@@ -2,10 +2,12 @@ package com.wealthsystems.challenge.service;
 
 import com.wealthsystems.challenge.datasource.model.Product;
 import com.wealthsystems.challenge.repository.ProductRepository;
+import com.wealthsystems.challenge.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -15,21 +17,17 @@ public class ProductService {
     @Autowired //Instancia pelo Spring;
     ProductRepository productRepository;
 
-//    public Consumer findById(Long id) {
-//        return consumerRepository.findById(id).get();
-//    }
     public List<Product> findAll() {
-        return productRepository.findAll();
+        List<Product> products = productRepository.findAll();
+        if (products.isEmpty())
+            throw new ObjectNotFoundException("Products not found!");
+        return products;
     }
 
     public Product findById(Long id) {
-        return productRepository.findById(id).get();
+        Optional<Product> p = productRepository.findById(id);
+        return p.orElseThrow(() -> new ObjectNotFoundException(
+                "Product not found! Id: " + id));
     }
-
-//    List<Consumer> findAll();
-//    Consumer findById(Long id);
-//    Consumer save(Consumer consumer);
-//    Consumer update(Consumer consumer, Long id);
-//    void deleteById(Long id);
 
 }

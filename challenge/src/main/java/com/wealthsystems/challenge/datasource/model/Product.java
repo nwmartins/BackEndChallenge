@@ -1,12 +1,10 @@
 package com.wealthsystems.challenge.datasource.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "product")//Nome da tabela na DB
@@ -14,16 +12,20 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
     private String barcode;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "products")
     private List<Manufacturer> manufacturers = new ArrayList<>();
     private Double unitPrice;
+
+    //Pedido conhece os itens
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.product") //Id da classe ItemRequest + .Products informando que vem da classe auxiliar ItemRequestPK
+    private Set<ItemRequest> items = new HashSet<>(); //Set = Java garante q n tenha Item repetido
 
     public Product(Long id, String name, String description, String barcode, Double unitPrice) {
         this.id = id;
@@ -82,6 +84,14 @@ public class Product implements Serializable {
 
     public void setManufacturers(List<Manufacturer> manufacturers) {
         this.manufacturers = manufacturers;
+    }
+
+    public Set<ItemRequest> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<ItemRequest> items) {
+        this.items = items;
     }
 
     @Override
