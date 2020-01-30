@@ -1,4 +1,4 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,10 +19,7 @@ public class Manufacturer  implements Serializable {
     private String name;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "manufacturer_product",
-            joinColumns = @JoinColumn(name = "manufacturer_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @OneToMany(mappedBy = "manufacturer")
     private List<Product> products = new ArrayList<>();
 
     public Manufacturer() {

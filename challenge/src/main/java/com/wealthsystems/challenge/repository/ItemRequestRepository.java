@@ -1,6 +1,6 @@
 package com.wealthsystems.challenge.repository;
 
-import com.wealthsystems.challenge.datasource.model.ItemRequest;
+import com.wealthsystems.challenge.model.ItemRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

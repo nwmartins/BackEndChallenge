@@ -1,6 +1,6 @@
 package com.wealthsystems.challenge;
 
-import com.wealthsystems.challenge.datasource.model.*;
+import com.wealthsystems.challenge.model.*;
 import com.wealthsystems.challenge.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -44,14 +44,15 @@ public class ChallengeApplication implements CommandLineRunner {
 //		Product p3 = new Product(null, "Apple juice", "Natural apple juice", "7002065423178", 34.87);
 //
 //		Manufacturer m1 = new Manufacturer(null, "Quality farm goods");
+//		Manufacturer m2 = new Manufacturer(null, "Quality farm bad");
 //		m1.getProducts().addAll(Arrays.asList(p1, p2, p3));
 //
-//		p1.getManufacturers().addAll(Arrays.asList(m1));
-//		p2.getManufacturers().addAll(Arrays.asList(m1));
-//		p3.getManufacturers().addAll(Arrays.asList(m1));
+//		p1.setManufacturer(m1);
+//		p2.setManufacturer(m1);
+//		p3.setManufacturer(m1);
 //
-//		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 //		manufacturerRepository.saveAll(Arrays.asList(m1));
+//		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 //
 //		Delivery d = new Delivery(null, "in-store withdrawal");
 //		Delivery d2 = new Delivery(null, "Sent by Correios");

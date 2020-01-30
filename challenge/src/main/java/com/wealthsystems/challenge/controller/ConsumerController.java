@@ -1,15 +1,12 @@
 package com.wealthsystems.challenge.controller;
 
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
 
-import com.wealthsystems.challenge.repository.ConsumerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.wealthsystems.challenge.datasource.model.Consumer;
+import com.wealthsystems.challenge.model.Consumer;
 import com.wealthsystems.challenge.service.ConsumerService;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

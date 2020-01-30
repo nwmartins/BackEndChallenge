@@ -3,7 +3,7 @@ package com.wealthsystems.challenge.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.wealthsystems.challenge.datasource.model.Consumer;
+import com.wealthsystems.challenge.model.Consumer;
 import com.wealthsystems.challenge.repository.ConsumerRepository;
 import com.wealthsystems.challenge.service.exception.DataIntegrityException;
 import com.wealthsystems.challenge.service.exception.ObjectNotFoundException;

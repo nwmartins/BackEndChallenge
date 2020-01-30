@@ -1,4 +1,4 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,6 +40,15 @@ public class ItemRequest implements Serializable {
         return id.getProduct();
     }
     //--------------------------------------------------------
+
+    public void setRequest(Request request) {
+        id.setRequest(request);
+    }
+
+    public void setProduct(Product product) {
+        id.setProduct(product);
+    }
+
     public ItemRequestPK getId() {
         return id;
     }
@@ -54,6 +63,10 @@ public class ItemRequest implements Serializable {
 
     public void setUnits(Double units) {
         this.units = units;
+    }
+
+    public Double getAmount() {
+        return (getProduct().getUnitPrice() * units);
     }
 
     @Override

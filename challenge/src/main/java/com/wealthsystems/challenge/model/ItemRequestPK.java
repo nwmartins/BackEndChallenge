@@ -1,4 +1,4 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;

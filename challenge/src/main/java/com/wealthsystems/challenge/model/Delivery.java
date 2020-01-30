@@ -1,7 +1,11 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +16,10 @@ public class Delivery implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String mode;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="delivery")
+    private List<Request> requests = new ArrayList<>();
 
     public Delivery(Long id, String mode) {
         this.id = id;
@@ -31,6 +39,14 @@ public class Delivery implements Serializable {
 
     public String getMode() {
         return mode;
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
     }
 
     @Override

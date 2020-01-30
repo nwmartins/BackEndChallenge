@@ -1,4 +1,4 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,7 +9,6 @@ import java.util.*;
 @Entity
 @Table(name = "product")//Nome da tabela na DB
 public class Product implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +17,10 @@ public class Product implements Serializable {
     private String description;
     private String barcode;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Manufacturer> manufacturers = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "manufacture_id")
+    private Manufacturer manufacturer;
+
     private Double unitPrice;
 
     //Pedido conhece os itens
@@ -78,12 +79,12 @@ public class Product implements Serializable {
         this.unitPrice = unitPrice;
     }
 
-    public List<Manufacturer> getManufacturers() {
-        return manufacturers;
+    public Manufacturer getManufacturer() {
+        return manufacturer;
     }
 
-    public void setManufacturers(List<Manufacturer> manufacturers) {
-        this.manufacturers = manufacturers;
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public Set<ItemRequest> getItems() {

@@ -1,16 +1,16 @@
-package com.wealthsystems.challenge.resource.model;
+package com.wealthsystems.challenge.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ConsumerResource {
+import java.io.Serializable;
+
+public class ConsumerDTO implements Serializable {
 
     @JsonProperty("name")
     private String nome;
     private String email;
 
-    public ConsumerResource(String nome, String email) {
-        this.nome = nome;
-        this.email = email;
+    public ConsumerDTO() {
     }
 
     public String getNome() {

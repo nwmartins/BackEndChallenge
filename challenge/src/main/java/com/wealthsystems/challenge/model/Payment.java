@@ -1,4 +1,6 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,12 +18,19 @@ public class Payment implements Serializable {
     private Integer installments;
     private Double installValue;
 
-    public Payment(Long id, String mode, Double amount, Integer installments, Double installValue) {
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name="request_id")
+    @MapsId
+    private Request request;
+
+    public Payment(Long id, String mode, Double amount, Integer installments, Double installValue, Request request) {
         this.id = id;
         this.mode = mode;
         this.amount = amount;
         this.installments = installments;
         this.installValue = installValue;
+        this.request = request;
     }
 
     public Payment() {
@@ -65,6 +74,14 @@ public class Payment implements Serializable {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
     @Override

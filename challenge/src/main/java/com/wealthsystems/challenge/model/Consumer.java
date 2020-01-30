@@ -1,19 +1,17 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "consumer")//Nome da tabela na DB
 public class Consumer implements Serializable{
-
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +19,10 @@ public class Consumer implements Serializable{
     private String name;
     private String phone;
     private String email;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="consumer")
+    private List<Request> requests = new ArrayList<>();
 
     public Consumer() {
     }
@@ -55,6 +57,14 @@ public class Consumer implements Serializable{
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
     }
 
     @Override

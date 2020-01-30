@@ -1,4 +1,4 @@
-package com.wealthsystems.challenge.datasource.model;
+package com.wealthsystems.challenge.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,8 +17,15 @@ public class Request implements Serializable {
     @OneToMany(mappedBy = "id.request") //Id da classe ItemRequest + .Pedido informando que vem da classe auxiliar ItemRequestPK
     private Set<ItemRequest> items = new HashSet<>(); //Set = Java garante q n tenha Item repetido
 
+    @ManyToOne
+    @JoinColumn(name="consumer_id")
     private Consumer consumer;
+
+    @OneToOne(cascade=CascadeType.ALL, mappedBy="request")
     private Payment payment;
+
+    @ManyToOne
+    @JoinColumn(name="delivery_id")
     private Delivery delivery;
 
     public Request(Long id, String status, Consumer consumer, Payment payment, Delivery delivery) {
