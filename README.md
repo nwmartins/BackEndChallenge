@@ -77,6 +77,40 @@ Para o POST e PUT é necessário na aba "Headers" a seguinte configuração:
 
 **GET =** http://localhost:8080/api/request/id
 
+**POST =** http://localhost:8080/api/product
+###### Aba Body 
+    {
+	    "items": [
+		    {
+			    "units": 3.0,
+			    "product": {
+				    "id": 1
+			    }
+		    },
+		    {
+			    "units": 4.0,
+			    "product": {
+				    "id": 2
+			    }
+		    }
+	    ],
+	    "consumer": {
+		    "name": "Carlos",
+		    "phone": "5594656546",
+		    "email": "teste@gmail.com"
+	    },
+	    "payment": {
+		    "mode": "bank slip",
+		    "installments": 4
+	    },
+	    "delivery": {
+		    "mode": "in-store withdrawal"
+	    }
+    }
+
+**PUT =** http://localhost:8080/api/request/id = **CONFIRMACAO DO PEDIDO**
+
+**DELETE**** = http://localhost:8080/api/request/id = **CANCELAMENTO DO PEDIDO**
 
 ## CONSIDERAÇÕES
 De fato, a API não ficou está (100%) implementada, por conta de ser um framework novo para mim, e por conta de tempo que já está se esgotando.
