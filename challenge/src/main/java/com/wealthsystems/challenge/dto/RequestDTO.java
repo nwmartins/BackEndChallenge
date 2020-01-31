@@ -1,7 +1,9 @@
 package com.wealthsystems.challenge.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wealthsystems.challenge.model.Consumer;
 import com.wealthsystems.challenge.model.ItemRequest;
+import com.wealthsystems.challenge.model.Request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -19,19 +21,14 @@ public class RequestDTO implements Serializable {
     private String paymentMode;
     @NotEmpty(message="can't be empty!")
     private Integer installments;
+    private Double amount;
+    private Double installValue;
 
     //Delivery
     @NotEmpty(message="can't be empty!")
     private String deliveryMode;
 
-    //Consumer
-    @NotEmpty(message="can't be empty!")
-    private String name;
-    @NotEmpty(message="can't be empty!")
-    private String phone;
-    @NotEmpty(message="can't be empty!")
-    @Email(message="invalid Email")
-    private String email;
+    private Consumer consumer;
 
     @NotEmpty(message="can't be empty!")
     private Set<ItemRequest> items = new HashSet<>();
@@ -39,8 +36,35 @@ public class RequestDTO implements Serializable {
     public RequestDTO() {
     }
 
+    public RequestDTO(Request r) {
+        status = r.getStatus();
+        paymentMode = r.getPayment().getMode();
+        installments = r.getPayment().getInstallments();
+        amount = r.getPayment().getAmount();
+        installValue = r.getPayment().getInstallValue();
+        deliveryMode = r.getDelivery().getMode();
+        consumer = r.getConsumer();
+        items = r.getItems();
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Double getInstallValue() {
+        return installValue;
+    }
+
+    public void setInstallValue(Double installValue) {
+        this.installValue = installValue;
     }
 
     public void setStatus(String status) {
@@ -71,28 +95,12 @@ public class RequestDTO implements Serializable {
         this.deliveryMode = deliveryMode;
     }
 
-    public String getName() {
-        return name;
+    public Consumer getConsumer() {
+        return consumer;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setConsumer(Consumer consumer) {
+        this.consumer = consumer;
     }
 
     public Set<ItemRequest> getItems() {

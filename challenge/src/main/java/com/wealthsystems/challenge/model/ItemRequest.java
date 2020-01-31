@@ -25,7 +25,6 @@ public class ItemRequest implements Serializable {
         //Pois ItemRequestPK e uma coisa do JPA
         id.setProduct(product);
         id.setRequest(request);
-        this.id = id;
         this.units = units;
     }
 

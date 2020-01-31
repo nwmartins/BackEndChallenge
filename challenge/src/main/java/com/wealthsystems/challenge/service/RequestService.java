@@ -17,15 +17,17 @@ public class RequestService {
     //Objeto de Serviço, acessa a camada de Acesso a Dados = Repository
 
     @Autowired //Instancia pelo Spring;
-    RequestRepository requestRepository;
+    private RequestRepository requestRepository;
     @Autowired
-    DeliveryRepository deliveryRepository;
+    private DeliveryRepository deliveryRepository;
     @Autowired
-    PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
     @Autowired
-    ConsumerRepository consumerRepository;
+    private ConsumerRepository consumerRepository;
     @Autowired
-    ItemRequestRepository itemRequestRepository;
+    private ItemRequestRepository itemRequestRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
 
     public List<Request> findAll() {
@@ -42,43 +44,79 @@ public class RequestService {
                 "Request not found! Id: " + id));
     }
 
-    public Request save(Request request) {
-        request.setId(null); //Pra ter certeza que o registro e novo
-        request.setStatus("pending confirmation");
+    public Request fromDTO(RequestDTO dto) {
+        Request r = new Request();
+        r.setId(null);
+        r.setConsumer(dto.getConsumer());
+        r.setStatus(dto.getStatus());
+        r.setDelivery(new Delivery(null, dto.getDeliveryMode()));
+        r.setPayment(new Payment(null, dto.getPaymentMode(), dto.getAmount(), dto.getInstallments(), dto.getInstallValue(), null));
+        r.setItems(dto.getItems());
 
-        //ItemRequest
-        Double sum = 0.0;
-        for (ItemRequest ir : request.getItems()) {
-            sum = sum + (ir.getUnits() + ir.getProduct().getUnitPrice()); //ir.getAmount();
-            ir.setRequest(request); //Vinculo cada Item ao Pedido
+        return r;
+    }
+
+    public void conffirmation(Long id){
+        Request r = findById(id);
+        if (r != null) {
+            r.setStatus("Conffirmed");
+            requestRepository.save(r);
         }
+    }
 
-        itemRequestRepository.saveAll(request.getItems());
-        //End ItemRequest
+    public void cancel(Long id){
+        Request r = findById(id);
+        if (r != null) {
+            r.setStatus("Canceled");
+            requestRepository.save(r);
+        }
+    }
 
-        //Payment
-        request.getPayment().setId(null);
-        request.getPayment().setAmount(sum);
-        request.getPayment().setInstallValue(sum / request.getPayment().getInstallments());
-        request.getPayment().setRequest(request);
 
-        paymentRepository.save(request.getPayment());
-        //End Payment
+    public Request save(Request request) {
+        Double sum = 0.0;
+        //try {
+            //request.setId(null); //Pra ter certeza que o registro e novo
+            request.setStatus("pending confirmation");
+            //Consumer
+            request.getConsumer().setId(null);
+            request.getConsumer().setRequests(Arrays.asList(request));
+            consumerRepository.save(request.getConsumer());
+            //End Consumer
+            //Delivery
+            request.getDelivery().setId(null);
+            request.getDelivery().setRequests(Arrays.asList(request));
 
-        //Consumer
-        request.getConsumer().setId(null);
-        request.getConsumer().setRequests(Arrays.asList(request));
+            deliveryRepository.save(request.getDelivery());
+            //End Delivery
 
-        consumerRepository.save(request.getConsumer());
+            //ItemRequest
+            for (ItemRequest ir : request.getItems()) {
+                ir.setProduct(productRepository.findById(ir.getProduct().getId()).get());
+                ir.setRequest(request); //Vinculo cada Item ao Pedido
+                sum = sum + (ir.getUnits() * ir.getProduct().getUnitPrice()); //ir.getAmount();
+            }
 
-        //End Consumer
+            //Payment
+            request.getPayment().setId(null);
+            request.getPayment().setAmount(sum);
+            request.getPayment().setInstallValue(sum / request.getPayment().getInstallments());
+            request.getPayment().setRequest(request);
 
-        //Delivery
-        request.getDelivery().setId(null);
-        request.getDelivery().setRequests(Arrays.asList(request));
-        //End Delivery
+            paymentRepository.save(request.getPayment());
+            //End Payment
 
-        return request;
+            itemRequestRepository.saveAll(request.getItems());
+            //End ItemRequest
+
+            request = requestRepository.save(request);
+
+
+            return request;
+//    } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
     }
 
 //    public Request fromDTO(RequestDTO dto) {
