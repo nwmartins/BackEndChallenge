@@ -3,6 +3,7 @@ package com.wealthsystems.challenge.controller;
 import com.wealthsystems.challenge.dto.ProductDTO;
 import com.wealthsystems.challenge.model.Product;
 import com.wealthsystems.challenge.service.ProductService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api") //Sempre depois da porta /api + restante da URL
+@Api(value = "BackEnd Challenge API REST")
+@CrossOrigin(origins = "*")//Liberar todos os dominios
 public class ProductController {
 
     //Controlador REST, irá acessar a camada de Serviços = Services;
