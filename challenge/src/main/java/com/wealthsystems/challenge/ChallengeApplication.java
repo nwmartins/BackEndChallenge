@@ -34,6 +34,10 @@ public class ChallengeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		Manufacturer m1 = new Manufacturer(null, "Quality farm goods");
+		Manufacturer m2 = new Manufacturer(null, "Wealth Systems");
+		manufacturerRepository.saveAll(Arrays.asList(m1, m2));
+
 //		//Id = null, DB Controla ID;
 //		Consumer consumer = new Consumer(null, "Carlos", "5594656546", "teste@gmail.com");
 //		Consumer consumer2 = new Consumer(null, "Maria", "5594656546", "testeMaria@gmail.com");
@@ -51,7 +55,7 @@ public class ChallengeApplication implements CommandLineRunner {
 //		p2.setManufacturer(m1);
 //		p3.setManufacturer(m1);
 //
-//		manufacturerRepository.saveAll(Arrays.asList(m1));
+
 //		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 //
 //		Delivery d = new Delivery(null, "in-store withdrawal");

@@ -115,4 +115,4 @@ Para o POST e PUT é necessário na aba "Headers" a seguinte configuração:
 ## CONSIDERAÇÕES
 De fato, a API não ficou está (100%) implementada, por conta de ser um framework novo para mim, e por conta de tempo que já está se esgotando.
 
-Independente de qualquer que for o resultado, estou muito grato pela proposta e experiencia desde já.
+Independentemente do resultado, estou muito grato pela proposta e experiência desde já.
